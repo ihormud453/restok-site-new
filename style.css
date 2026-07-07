@@ -190,7 +190,7 @@
   }
 
   /* Lead form */
-  .lead{padding:var(--xxl) 0;}
+  section.lead{padding:var(--xxl) 0;}
   .lead-card{
     border:0.5px solid var(--divider); border-radius:var(--radius-banner);
     background:var(--black); color:var(--white);
@@ -265,6 +265,7 @@
   }
   @media (max-width: 767px){
     .stats{grid-template-columns:repeat(2,1fr);}
+    .cat-grid{grid-template-columns:1fr;}
     .video-grid{grid-template-columns:1fr;}
     .why-grid{grid-template-columns:1fr;}
     nav{display:none;}
