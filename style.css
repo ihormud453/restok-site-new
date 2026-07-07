@@ -209,6 +209,11 @@
   }
   .lead-form textarea{resize:vertical; min-height:80px;}
   .lead-form ::placeholder{color:#6B6B62;}
+  .lead-form button[disabled]{opacity:0.6; cursor:not-allowed;}
+  .form-message{font-family:'JetBrains Mono', monospace; font-size:13px;}
+  .form-message:empty{display:none;}
+  .form-message.success{color:#4ADE80;}
+  .form-message.error{color:var(--danger);}
 
   /* Video block */
   .videos{padding:var(--xxl) 0;}

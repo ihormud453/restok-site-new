@@ -54,12 +54,24 @@
     });
   })();
 
-// Honeypot anti-spam: перевірка форм заявки перед відправкою
+// Форми заявки: honeypot anti-spam + відправка на /api/send-lead
 (function(){
   var forms = document.querySelectorAll('.lead-form');
   forms.forEach(function(form){
     var submitBtn = form.querySelector('button[type="button"]');
     if(!submitBtn) return;
+
+    var messageEl = document.createElement('div');
+    messageEl.className = 'form-message';
+    messageEl.setAttribute('role', 'status');
+    messageEl.setAttribute('aria-live', 'polite');
+    form.appendChild(messageEl);
+
+    function showMessage(text, type){
+      messageEl.textContent = text;
+      messageEl.className = type ? 'form-message ' + type : 'form-message';
+    }
+
     submitBtn.addEventListener('click', function(){
       var honeypot = form.querySelector('.hp-field');
       if(honeypot && honeypot.value.trim() !== ''){
@@ -68,9 +80,56 @@
         console.log('Заявку відхилено (honeypot).');
         return;
       }
-      // TODO: тут буде реальна відправка на /api/send-lead (Vercel Function -> Telegram)
-      // після налаштування у Кроці 4 (Vercel + Telegram)
-      alert('Дякуємо! Заявку прийнято. Наразі це демо-повідомлення — реальна відправка підключається на наступному кроці.');
+
+      var nameField = form.querySelector('[name="name"]');
+      var phoneField = form.querySelector('[name="phone"]');
+      var emailField = form.querySelector('[name="email"]');
+      var commentField = form.querySelector('[name="comment"]');
+
+      var name = nameField ? nameField.value.trim() : '';
+      var phone = phoneField ? phoneField.value.trim() : '';
+
+      if(!name || !phone){
+        showMessage('Заповніть, будь ласка, імʼя та телефон.', 'error');
+        return;
+      }
+
+      var payload = {
+        name: name,
+        phone: phone,
+        comment: commentField ? commentField.value.trim() : '',
+        company_website: honeypot ? honeypot.value : ''
+      };
+      if(emailField){ payload.email = emailField.value.trim(); }
+
+      var originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Надсилаємо...';
+      showMessage('', '');
+
+      fetch('/api/send-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+        .then(function(res){
+          return res.json().then(function(data){ return { ok: res.ok, data: data }; });
+        })
+        .then(function(result){
+          if(result.ok && result.data && result.data.ok){
+            showMessage('Дякуємо! Заявку прийнято, ми звʼяжемось найближчим часом.', 'success');
+            form.reset();
+          } else {
+            showMessage('Не вдалося надіслати заявку. Спробуйте ще раз або зателефонуйте нам.', 'error');
+          }
+        })
+        .catch(function(){
+          showMessage('Не вдалося надіслати заявку. Перевірте зʼєднання та спробуйте ще раз.', 'error');
+        })
+        .finally(function(){
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        });
     });
   });
 })();
