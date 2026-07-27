@@ -162,20 +162,21 @@
   .section-head{margin-bottom:var(--xl); max-width:620px;}
   .section-head .eyebrow{margin-bottom:var(--sm);}
   .cat-grid{display:grid; grid-template-columns:1fr 1fr; gap:var(--lg);}
+  /* Вся картка категорії — це одне посилання (клікабельна повністю).
+     Без transform на hover, щоб курсор не мерехтів і клік був стабільним. */
   .cat-card{
     border:0.5px solid var(--divider);
     border-radius:var(--radius-card);
     padding:var(--lg);
     background:var(--white);
     display:flex; flex-direction:column; gap:var(--md);
-    transition:transform 0.2s ease, border-color 0.2s ease;
+    text-decoration:none; color:inherit;
+    transition:border-color 0.2s ease, box-shadow 0.2s ease;
   }
-  .cat-card:hover{transform:translateY(-4px); border-color:var(--black);}
-  /* Вся картка категорії клікабельна: розтягуємо посилання-кнопку на весь блок */
-  .cat-card{ position:relative; }
-  .cat-card .btn-block::after{ content:""; position:absolute; inset:0; z-index:1; }
+  .cat-card:hover{ border-color:var(--black); box-shadow:0 6px 20px rgba(15,15,14,0.07); }
+  .cat-card .btn-block{ margin-top:auto; }
   .cat-media{
-    height:220px; border-radius:var(--radius-md);
+    aspect-ratio:4/3; border-radius:var(--radius-md);
     background:var(--section-gray);
     display:flex; align-items:center; justify-content:center;
     color:var(--text-muted); font-size:13px;
@@ -493,7 +494,7 @@
 
   .product-grid{
     display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--lg);
-    padding:var(--md) 0 var(--xxl);
+    padding:2rem 0 var(--xxl);
   }
   .product-card{
     border:0.5px solid var(--divider); border-radius:var(--radius-card);
