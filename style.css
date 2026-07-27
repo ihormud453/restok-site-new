@@ -182,7 +182,6 @@
     width:100%; height:100%; object-fit:cover; display:block;
   }
   .cat-media--contain img{ object-fit:contain; }
-  .product-media--contain img{ object-fit:contain; }
   .spec-badges{display:flex; flex-wrap:wrap; gap:6px;}
   .spec-lines{display:flex; flex-direction:column; gap:2px;}
   .spec-lines p{margin:0; font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--text-secondary);}
@@ -513,6 +512,11 @@
     border-style:solid; border-width:0 20px 20px 0;
     border-color:transparent var(--yellow) transparent transparent;
   }
+  /* Вентустановки: показуємо фото повністю на всю ширину без обрізки та без
+     сірих полів з боків — рамка підлаштовує висоту під природну пропорцію фото.
+     Правило має бути ПІСЛЯ .product-media, щоб перекрити фіксовану height:180px. */
+  .product-media--contain{ height:auto; background:transparent; }
+  .product-media--contain img{ height:auto; object-fit:contain; }
   .product-tag{
     align-self:flex-start;
     font-family:'JetBrains Mono', monospace; font-size:11px; font-weight:500;
