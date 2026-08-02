@@ -268,6 +268,10 @@
   footer{padding:var(--xl) 0; background:var(--black); color:#B8B8B0;}
   .footer-inner{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:var(--md);}
   .footer-inner p{color:#8A8A82; font-size:13px;}
+  .footer-contacts{display:flex; flex-direction:column; gap:4px; font-size:13px;}
+  .footer-contacts a, .footer-contacts span{color:#B8B8B0; transition:color 0.15s ease;}
+  .footer-contacts a:hover{color:var(--yellow);}
+  .footer-contacts span{color:#8A8A82;}
 
   @media (max-width: 1023px){
     .cat-grid, .video-grid, .why-grid{grid-template-columns:repeat(2,1fr);}
