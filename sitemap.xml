@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  УВАГА: домен нижче — restok.online, як зазначено в брендбуку.
-  Якщо домен ще не зареєстровано (Крок 07) або буде іншим —
-  заміни всі входження restok.online на актуальний домен перед публікацією.
--->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://restok.online/</loc>
